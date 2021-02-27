@@ -1,6 +1,6 @@
 # is-urlsearchparams [![NPM Version][npm-image]][npm-url] ![File Size][filesize-image] [![Build Status][travis-image]][travis-url] [![Dependency Monitor][greenkeeper-image]][greenkeeper-url]
 
-> Determines whether a value is a [`URLSearchParams`](https://developer.mozilla.org/en/docs/Web/API/URLSearchParams) instance.
+> Determines whether a value is a [`URLSearchParams`](https://mdn.io/URLSearchParams) instance.
 
 
 Works cross-realm/iframe and despite `Symbol.toStringTag`.
@@ -8,7 +8,7 @@ Works cross-realm/iframe and despite `Symbol.toStringTag`.
 
 ## Installation
 
-[Node.js](http://nodejs.org/) `>= 8` is required. To install, type this at the command line:
+[Node.js](https://nodejs.org) `>= 8` is required. To install, type this at the command line:
 ```shell
 npm install is-urlsearchparams
 ```
@@ -35,7 +35,7 @@ isURLSearchParams.lenient(params);  //-> true
 
 [npm-image]: https://img.shields.io/npm/v/is-urlsearchparams.svg
 [npm-url]: https://npmjs.com/package/is-urlsearchparams
-[filesize-image]: https://img.shields.io/badge/size-834B%20gzipped-blue.svg
+[filesize-image]: https://img.shields.io/badge/bundle-3kB%20gzipped-blue.svg
 [travis-image]: https://img.shields.io/travis/stevenvachon/is-urlsearchparams.svg
 [travis-url]: https://travis-ci.org/stevenvachon/is-urlsearchparams
 [greenkeeper-image]: https://badges.greenkeeper.io/stevenvachon/is-urlsearchparams.svg

@@ -4,19 +4,19 @@ const customizeSymbol = require("incomplete-symbol");
 const customizeURL = require("incomplete-url");
 const decache = require("decache");
 const {expect} = require("chai");
-const {lenientProperties, strictProperties} = require("./lib/props");
+const {LENIENT_PROPERTIES, STRICT_PROPERTIES} = require("./lib/props");
 const {parse: parseURL, URLSearchParams: NativeURLSearchParams} = require("url");
 const {URLSearchParams: ShimmedURLSearchParams} = require("whatwg-url");
 
-const allProperties = [...lenientProperties, ...strictProperties];
-const paramsString = "param=value";
+const ALL_PROPERTIES = [...LENIENT_PROPERTIES, ...STRICT_PROPERTIES];
+const PARAMS_STRING = "param=value";
 let isURLSearchParams;
 
 
 
 const createMock = (config={}) =>
 {
-	const mock = allProperties.reduce((result, prop) =>
+	const mock = ALL_PROPERTIES.reduce((result, prop) =>
 	{
 		result[prop] = () => {};
 		return result;
@@ -54,7 +54,7 @@ before(() => requireFreshLibs());
 
 it("accepts a native full implemention", () =>
 {
-	const searchParams = new NativeURLSearchParams(paramsString);
+	const searchParams = new NativeURLSearchParams(PARAMS_STRING);
 
 	expect( isURLSearchParams(searchParams) ).to.be.true;
 	expect( isURLSearchParams.lenient(searchParams) ).to.be.true;
@@ -64,7 +64,7 @@ it("accepts a native full implemention", () =>
 
 it("accepts a shimmed full implemention", () =>
 {
-	const searchParams = new ShimmedURLSearchParams(paramsString);
+	const searchParams = new ShimmedURLSearchParams(PARAMS_STRING);
 
 	expect( isURLSearchParams(searchParams) ).to.be.true;
 	expect( isURLSearchParams.lenient(searchParams) ).to.be.true;
@@ -75,7 +75,7 @@ it("accepts a shimmed full implemention", () =>
 it("can accept a partial implemention", () =>
 {
 	const {IncompleteURLSearchParams} = customizeURL({ paramsExclusions:["sort"] });
-	const searchParams = new IncompleteURLSearchParams(paramsString);
+	const searchParams = new IncompleteURLSearchParams(PARAMS_STRING);
 
 	expect( isURLSearchParams(searchParams) ).to.be.false;
 	expect( isURLSearchParams.lenient(searchParams) ).to.be.true;
@@ -87,10 +87,10 @@ it("rejects non-URLSearchParams types", () =>
 {
 	const fixtures =
 	[
-		paramsString,
+		PARAMS_STRING,
 		createMock(),
-		parseURL(paramsString, true).query,
-		Symbol(paramsString),
+		parseURL(PARAMS_STRING, true).query,
+		Symbol(PARAMS_STRING),
 		{},
 		[],
 		/regex/,
@@ -109,7 +109,7 @@ it("rejects non-URLSearchParams types", () =>
 
 
 
-allProperties.forEach(key =>
+ALL_PROPERTIES.forEach(key =>
 {
 	it(`rejects a mocked implementation lacking the "${key}" property`, () =>
 	{
@@ -117,7 +117,7 @@ allProperties.forEach(key =>
 
 		expect( isURLSearchParams(mock) ).to.be.false;
 
-		if (lenientProperties.includes(key))
+		if (LENIENT_PROPERTIES.includes(key))
 		{
 			expect( isURLSearchParams.lenient(mock) ).to.be.true;
 		}
